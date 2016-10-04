@@ -15,6 +15,6 @@ RUN bundle install --without development test
 
 COPY . /usr/src/app
 
-EXPOSE 9292
+EXPOSE 443
 
 CMD ["/usr/local/bin/bundle", "exec", "puma -b \"ssl://0.0.0.0:443?key=rootCA.key&cert=rootCA.crt\""]
