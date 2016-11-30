@@ -1,20 +1,22 @@
 FROM ruby:2.3
 
 ENV LANG C.UTF-8
-ENV TEACHBASE_HOST http://s1.teachbase.ru/
+ENV TEACHBASE_HOST http://go.teachbase.ru/
 
-RUN bundle config --global frozen 1
+RUN mkdir -p /webapps/yandex_proxy
+WORKDIR /webapps/yandex_proxy
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# RUN bundle config --global frozen 1
 
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
+COPY Gemfile /webapps/yandex_proxy
+COPY Gemfile.lock /webapps/yandex_proxy
 
-RUN bundle install --without development test
+RUN gem install bundler && bundle install --without development test
 
-COPY . /usr/src/app
+COPY . /webapps/yandex_proxy
+
+RUN mkdir -p shared/pids && mkdir -p shared/log && mkdir -p shared/sockets
 
 EXPOSE 443
 
-CMD ["/usr/local/bin/bundle", "exec", "puma -b \"ssl://0.0.0.0:443?key=rootCA.key&cert=rootCA.crt\""]
+CMD puma -C config/puma.rb

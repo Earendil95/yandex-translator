@@ -1,6 +1,5 @@
 require 'cuba'
 require 'cuba/safe'
-# require 'pry-byebug'
 require 'faraday'
 
 require './app.rb'
