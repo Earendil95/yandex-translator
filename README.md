@@ -1,4 +1,4 @@
-# Yandex Translator
+# Yandex Request Forwarder
 
 Сервис для приема HTTPS-запросов [Яндекс.Кассы](https://kassa.yandex.ru/) и их дальнейшую передачу по HTTP в [Teachbase](https://github.com/webils/teachbase2)
 
