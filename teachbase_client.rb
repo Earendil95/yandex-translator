@@ -13,7 +13,7 @@ class TeachbaseClient
 
   def initialize(params)
     @request_params = params
-    @connect = Faraday.new url: ENV['TEACHBASE_HOST'] || 'http://213.134.198.189:3002/'
+    @connect = Faraday.new url: ENV['TEACHBASE_HOST']
   end
 
   def check_order
