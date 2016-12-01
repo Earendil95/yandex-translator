@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'cuba'
-gem 'faraday'
+gem 'curb'
+gem 'json'
 
 gem 'puma', '~> 2.11.0'
 
