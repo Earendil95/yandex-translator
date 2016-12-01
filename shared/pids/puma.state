@@ -1,0 +1,24 @@
+---
+pid: 2352
+config: !ruby/object:Puma::Configuration
+  options:
+    :min_threads: 1
+    :max_threads: 4
+    :quiet: false
+    :debug: false
+    :binds:
+    - ssl://0.0.0.0:3000?key=rootCA.key&cert=rootCA.crt
+    :workers: 1
+    :daemon: false
+    :worker_directory: "/webapps/teachbase/yandex-request-forwarder"
+    :config_file: config/puma.rb
+    :mode: :http
+    :worker_timeout: 60
+    :worker_shutdown_timeout: 30
+    :environment: production
+    :pidfile: "/webapps/teachbase/yandex-request-forwarder/shared/pids/puma.pid"
+    :state: "/webapps/teachbase/yandex-request-forwarder/shared/pids/puma.state"
+    :control_url: unix:///tmp/puma-status-1480609516461-2352
+    :control_url_temp: "/tmp/puma-status-1480609516461-2352"
+    :control_auth_token: 42e051dcafb07a50d37248acd2889a1
+    :tag: yandex-request-forwarder
