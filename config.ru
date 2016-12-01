@@ -1,7 +1,9 @@
 require 'cuba'
-require 'cuba/safe'
+require 'logger'
 require 'faraday'
 
+require './rrlogger'
+require './teachbase_client'
 require './app.rb'
 
 use Rack::Session::Cookie,

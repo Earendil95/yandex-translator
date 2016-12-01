@@ -1,40 +1,39 @@
-require './teachbase_client'
-
-Cuba.plugin Cuba::Safe
+Cuba.plugin RRLogger
+Cuba.plugin TeachbaseClient
 
 Cuba.define do
-  # on csrf.unsafe? do
-  #   csrf.reset!
-
-  #   res.status = 403
-  #   res.write("Not authorized")
-
-  #   halt(res.finish)
-  # end
-
   on post do
     on "yandex" do
       on "check_order" do
         on root do
-          res.write TeachbaseClient.check_order(req.params).body
+          response = check_order(req.params)
+          res.headers.merge! response.env.response_headers
+          res.write response.body
+          log_connection
         end
       end
 
       on "payment_aviso" do
         on root do
-          res.write TeachbaseClient.payment_aviso(req.params).body
+          response = payment_aviso(req.params).body
+          res.headers.merge! response.env.response_headers
+          res.write response.body
+          log_connection
         end
       end
     end
 
     on true do
-      res.write "404"
+      res.status 404
+      res.write "404 Not Found"
+      log_connection
     end
   end
 
   on get do
     on root do
       res.write "Hello!"
+      log_connection
     end
   end
 end
