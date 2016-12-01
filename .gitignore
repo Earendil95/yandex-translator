@@ -1,2 +1,4 @@
 rootCA.crt
 rootCA.key
+
+shared/
