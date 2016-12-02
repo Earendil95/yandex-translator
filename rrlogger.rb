@@ -18,13 +18,13 @@ module RRLogger
     str = "\n#{env["REQUEST_METHOD"]} #{env["REQUEST_PATH"]}\n"
     str += "Headers:\n"
     str += request_headers.map { |k, v| "  #{k} = #{v}" }.join("\n") + "\n"
-    b = req.body.read
+    b = req.params
     if b.empty?
       str += "Body is empty\n\n"
     else
-      str += "Body:\n"
-      str += "  " + b.gsub("&", "\n  ") + "\n\n"
+      str += "Body:\n" + b.map { |k, v| "  #{k} = #{v}" }.join("\n")
     end
+    str += "\n"
     str
   end
 
