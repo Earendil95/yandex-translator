@@ -2,6 +2,7 @@ FROM ruby:2.3
 
 ENV LANG C.UTF-8
 ENV TEACHBASE_HOST http://go.teachbase.ru/
+ENV RACK_ENV production
 
 RUN mkdir -p /webapps/yandex_proxy
 WORKDIR /webapps/yandex_proxy
