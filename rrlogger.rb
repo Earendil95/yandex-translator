@@ -12,9 +12,9 @@ module RRLogger
   end
 
   def log_string
-    str = "\n#{env["REQUEST_METHOD"]} #{env["REQUEST_PATH"]}\n" \
-          "User id: #{req.params["customerNumber"]}\n" \
-          "Product id: #{req.params["product_id"]}\n" \
-          "Order id: #{req.params[orderNumber]}"
+    "\n#{env["REQUEST_METHOD"]} #{env["REQUEST_PATH"]}\n" \
+    "User id: #{req.params["customerNumber"]}\n" \
+    "Product id: #{req.params["product_id"]}\n" \
+    "Order id: #{req.params[orderNumber]}\n"
   end
 end
