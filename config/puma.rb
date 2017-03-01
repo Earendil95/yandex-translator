@@ -10,7 +10,8 @@ shared_dir = "#{app_dir}/shared"
 environment "production"
 
 # Set up socket location
-bind "ssl://0.0.0.0:443?key=rootCA.key&cert=rootCA.crt"
+# bind "ssl://0.0.0.0:443?key=rootCA.key&cert=rootCA.crt"
+bind "unix://#{shared_dir}/sockets/puma.sock"
 
 # Logging
 stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true

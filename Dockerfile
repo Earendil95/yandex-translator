@@ -4,6 +4,9 @@ ENV LANG C.UTF-8
 ENV TEACHBASE_HOST http://go.teachbase.ru/
 ENV RACK_ENV production
 
+RUN apt-get update && apt-get install -y sudo nginx
+COPY ./config/nginx/default.conf /etc/nginx/sites-available/default
+
 RUN mkdir -p /webapps/yandex_proxy
 WORKDIR /webapps/yandex_proxy
 
@@ -20,4 +23,4 @@ RUN mkdir -p shared/pids && mkdir -p shared/log && mkdir -p shared/sockets
 
 EXPOSE 443
 
-CMD puma -C config/puma.rb
+CMD /bin/sh bin/entrypoint.sh
