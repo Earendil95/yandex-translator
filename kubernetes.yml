@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tb-pay-cvs
+  labels:
+    app: yandex
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 443
+  selector:
+    app: yandex
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tb-pay
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: yandex
+    spec:
+      containers:
+      - name: pay-teachbase
+        image: eu.gcr.io/big-keyword-788/yandex-proxy:latest
+        ports:
+        - containerPort: 443
