@@ -10,26 +10,27 @@ module TeachbaseClient
     curl
   end
 
-  def check_order(params)
-    current_client = tb_client("yandex/check_order")
+  def check_order(path, params)
+    current_client = tb_client(path)
     current_client.post *params.map { |k, v| "#{k}=#{v}" } do |r|
       r.headers["Content-Type"] = 'application/x-www-form-urlencoded'
     end
     current_client
   end
 
-  def payment_aviso(params)
-    current_client = tb_client("yandex/payment_aviso")
+  def payment_aviso(path, params)
+    current_client = tb_client(path)
     current_client.post *params.map { |k, v| "#{k}=#{v}" } do |r|
       r.headers["Content-Type"] = 'application/x-www-form-urlencoded'
     end
     current_client
   end
 
-  def url(path)
-    host = ENV['TEACHBASE_HOST']
-    m = host.match /\/$/
-    host += '/' if m.nil?
-    host += path
-  end
+  protected
+    def url(path)
+      host = ENV['TEACHBASE_HOST']
+      m = host.match /\/$/
+      host += '/' if m.nil?
+      host += path
+    end
 end

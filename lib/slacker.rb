@@ -45,7 +45,6 @@ module Slacker
             "backtrace:\n" \
             "```#{e.backtrace.join "\n"}```\n" \
             "on `POST yandex/payment_aviso`\n" \
-            "with headers:\n```#{request_headers.map { |k, v| "#{k} = #{v}" }.join "\n"}```\n" \
             "with params:\n```#{req.params.map { |k, v| "#{k} = #{v}" }.join("\n")}```"
     }.to_json
   end

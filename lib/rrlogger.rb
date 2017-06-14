@@ -1,7 +1,7 @@
 module RRLogger
   def logger
     @logger ||= if ENV['RACK_ENV'] == 'production'
-                  Logger.new File.expand_path("../", __FILE__) + '/shared/log/production.log'
+                  Logger.new File.expand_path("../../", __FILE__) + '/shared/log/production.log'
                 else
                   Logger.new STDOUT
                 end
@@ -15,6 +15,6 @@ module RRLogger
     "\n#{env["REQUEST_METHOD"]} #{env["REQUEST_PATH"]}\n" \
     "User id: #{req.params["customerNumber"]}\n" \
     "Product id: #{req.params["product_id"]}\n" \
-    "Order id: #{req.params[orderNumber]}\n"
+    "Order id: #{req.params["orderNumber"]}\n"
   end
 end
