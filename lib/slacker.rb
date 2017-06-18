@@ -7,22 +7,22 @@ module Slacker
     Curl::Easy.new webhook
   end
 
-  def slack_post(text)
-    params = perform_message(text)
+  def slack_post(req, res)
+    params = perform_message(req, res)
     slack_client.post params
   end
 
-  def slack_post_error(error)
-    params = perform_error_message(error)
+  def slack_post_error(error, req)
+    params = perform_error_message(error, req)
     slack_client.post params
   end
 
-  def perform_message(head)
-    str = "*#{head}*; order number _#{req.params["orderNumber"]}_\n"
-    str += "*User ID*: #{req.params["customerNumber"]}\n"
-    str += "*User fullname*: #{req.params["user_fullname"]}\n"
-    str += "*Product ID*: #{req.params["product_id"]}\n"
-    str += "*Product name*: #{req.params["product_name"]}\n"
+  def perform_message(req, res)
+    str = "*#{slack_msg(req)}*; order number _#{req.params['orderNumber']}_\n"
+    str += "*User ID*: #{req.params['customerNumber']}\n"
+    str += "*User fullname*: #{req.params['user_fullname']}\n"
+    str += "*Product ID*: #{req.params['product_id']}\n"
+    str += "*Product name*: #{req.params['product_name']}\n"
     m = res.body.first.match /code="(\d{1,3})"/
     if m.nil?
       str += "*_WTF?!?!?!_*"
@@ -39,14 +39,19 @@ module Slacker
     { text: str }.to_json
   end
 
-  def perform_error_message(e)
+  def perform_error_message(e, req)
     {
       text: "*#{e.class}*: #{e.message}\n" \
             "backtrace:\n" \
             "```#{e.backtrace.join "\n"}```\n" \
-            "on `POST yandex/payment_aviso`\n" \
-            "with headers:\n```#{request_headers.map { |k, v| "#{k} = #{v}" }.join "\n"}```\n" \
+            "on `POST #{req.path}`\n" \
             "with params:\n```#{req.params.map { |k, v| "#{k} = #{v}" }.join("\n")}```"
     }.to_json
+  end
+
+  def slack_msg(req)
+    return ':sos:' unless req
+    msg = req.path.gsub(/[\/\_]/,' ').strip.upcase
+    msg
   end
 end
