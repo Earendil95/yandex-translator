@@ -7,18 +7,18 @@ module Slacker
     Curl::Easy.new webhook
   end
 
-  def slack_post(req, res)
-    params = perform_message(req, res)
+  def slack_post
+    params = perform_message
     slack_client.post params
   end
 
-  def slack_post_error(error, req)
-    params = perform_error_message(error, req)
+  def slack_post_error(error)
+    params = perform_error_message(error)
     slack_client.post params
   end
 
-  def perform_message(req, res)
-    str = "*#{slack_msg(req)}*; order number _#{req.params['orderNumber']}_\n"
+  def perform_message
+    str = "*#{slack_head}*; order number _#{req.params['orderNumber']}_\n"
     str += "*User ID*: #{req.params['customerNumber']}\n"
     str += "*User fullname*: #{req.params['user_fullname']}\n"
     str += "*Product ID*: #{req.params['product_id']}\n"
@@ -39,7 +39,7 @@ module Slacker
     { text: str }.to_json
   end
 
-  def perform_error_message(e, req)
+  def perform_error_message(e)
     {
       text: "*#{e.class}*: #{e.message}\n" \
             "backtrace:\n" \
@@ -49,8 +49,7 @@ module Slacker
     }.to_json
   end
 
-  def slack_msg(req)
-    return ':sos:' unless req
+  def slack_head
     msg = req.path.gsub(/[\/\_]/,' ').strip.upcase
     msg
   end

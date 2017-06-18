@@ -10,20 +10,12 @@ module TeachbaseClient
     curl
   end
 
-  def check_order(req)
-    invoke_verb req
-  end
-
-  def payment_aviso(req)
-    invoke_verb req
-  end
-
   def url(path)
     host = ENV['TEACHBASE_HOST'].gsub(/\/$/,'')
     host += path
   end
 
-  def invoke_verb(req)
+  def forward_request_to_tb
     current_client = tb_client(req.path)
     current_client.post req.params.map { |k, v| "#{k}=#{v}" } do |r|
       r.headers['Content-Type'] = 'application/x-www-form-urlencoded'

@@ -7,12 +7,12 @@ module RRLogger
                 end
   end
 
-  def log_connection(req)
-    logger.info log_string(req)
+  def log_connection
+    logger.info log_string
   end
 
-  def log_string(req)
-    "\n#{req.env['REQUEST_METHOD']} #{req.env['REQUEST_PATH']}\n" \
+  def log_string
+    "\n#{env['REQUEST_METHOD']} #{env['REQUEST_PATH']}\n" \
     "User id: #{req.params['customerNumber']}\n" \
     "Product id: #{req.params['product_id']}\n" \
     "Order id: #{req.params['orderNumber']}\n"

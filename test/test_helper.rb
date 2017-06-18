@@ -5,6 +5,7 @@ require 'mocha/mini_test'
 require 'pry-byebug'
 
 ENV['RACK_ENV'] = 'test'
+ENV['TEACHBASE_HOST'] = 'http://go.teachbase.ru/'
 
 require_relative '../app'
 
