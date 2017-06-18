@@ -4,9 +4,9 @@ require 'rack/test'
 require 'mocha/mini_test'
 require 'pry-byebug'
 
-ENV["RACK_ENV"]  = "test"
+ENV['RACK_ENV'] = 'test'
 
-require_relative "../app"
+require_relative '../app'
 
 class MiniTest::Spec
   include Rack::Test::Methods

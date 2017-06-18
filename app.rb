@@ -5,8 +5,8 @@ require 'json'
 require './lib/rrlogger'
 require './lib/slacker'
 require './lib/teachbase_client'
-require './routes/internal_routes'
-require './routes/client_routes'
+require './routes/route'
+require './controllers/payment_controllers'
 require './helpers/routes'
 
 Cuba.plugin TeachbaseClient
@@ -16,11 +16,11 @@ Cuba.plugin YandexPaymentProxy::Helpers
 
 Cuba.define do
   on "yandex" do
-    run YandexPaymentProxy::ClientRoutes
+    run YandexPaymentProxy::Route
   end
 
   on "internal" do
-    run YandexPaymentProxy::InternalRoutes
+    run YandexPaymentProxy::Route
   end
 
   not_found!
@@ -28,7 +28,7 @@ Cuba.define do
   on get do
     on root do
       res.write "Hello!"
-      log_connection
+      log_connection req
     end
   end
 end
