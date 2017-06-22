@@ -14,22 +14,26 @@ Cuba.plugin YandexPaymentProxy::Helpers
 
 Cuba.define do
   on post do
-    begin
-      response = forward_request_to_tb
-      res.write response.body
-      res.headers.merge! response.headers
-      log_connection
-      slack_post
-    rescue => e
-      slack_post_error e
+    on terminal do
+      begin
+        response = forward_request_to_tb
+        not_found! if response.nil?
+        res.write response.body
+        res.headers.merge! response.headers
+        log_connection
+        slack_post
+      rescue => e
+        slack_post_error e
+      end
     end
+    not_found!
   end
 
   not_found!
 
   on get do
     on root do
-      res.write "Hello!"
+      res.write 'Hello!'
       log_connection
     end
   end

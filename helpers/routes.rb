@@ -5,5 +5,9 @@ module YandexPaymentProxy
       res.write '404 Not Found'
       log_connection
     end
+
+    def terminal
+      /(?:yandex|payments)\/(?:check_order|payment_aviso)\/?\z/
+    end
   end
 end
