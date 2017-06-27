@@ -1,49 +1,39 @@
-Cuba.plugin RRLogger
+require 'cuba'
+require 'logger'
+require 'curb'
+require 'json'
+require './lib/rrlogger'
+require './lib/slacker'
+require './lib/teachbase_client'
+require './helpers/routes'
+
 Cuba.plugin TeachbaseClient
+Cuba.plugin RRLogger
 Cuba.plugin Slacker
+Cuba.plugin YandexPaymentProxy::Helpers
 
 Cuba.define do
   on post do
-    on "yandex" do
-      on "check_order" do
-        on root do
-          begin
-            response = check_order(req.params)
-            res.write response.body
-            res.headers.merge! response.headers
-            log_connection
-            slack_post "Check order"
-          rescue => e
-            slack_post_error e
-          end
-        end
-      end
-
-      on "payment_aviso" do
-        on root do
-          begin
-            response = payment_aviso(req.params)
-            res.write response.body
-            res.headers.merge! response.headers
-            log_connection
-            slack_post "Payment aviso"
-          rescue => e
-            slack_post_error e
-          end
-        end
+    on terminal do
+      begin
+        response = forward_request_to_tb
+        not_found! if response.nil?
+        res.write response.body
+        res.headers.merge! response.headers
+        log_connection
+        slack_post
+      rescue => e
+        slack_post_error e
       end
     end
-
-    on true do
-      res.status = 404
-      res.write "404 Not Found"
-      log_connection
-    end
+    not_found!
   end
+
+  not_found!
 
   on get do
     on root do
-      res.write "Hello!"
+      res.write 'Hello!'
       log_connection
     end
   end
