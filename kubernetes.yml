@@ -24,6 +24,6 @@ spec:
     spec:
       containers:
       - name: pay-teachbase
-        image: eu.gcr.io/big-keyword-788/yandex-proxy:latest
+        image: eu.gcr.io/big-keyword-788/yandex-proxy:1.0.6
         ports:
         - containerPort: 443

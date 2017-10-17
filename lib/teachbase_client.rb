@@ -7,6 +7,7 @@ module TeachbaseClient
       curl.headers[m[1]] = m[2].chomp unless m.nil? || m[1] == 'Transfer-Encoding'
       data.length
     end
+    curl.ssl_verify_peer = false
     curl
   end
 
